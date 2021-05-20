@@ -1,168 +1,171 @@
 # QuickDoorCam
 Quick Security Cam for RPi
 
-Download "RASPBIAN JESSIE LITE" https://www.raspberrypi.org/downloads/raspbian/
+Download "RASPBIAN JESSIE LITE"
+https://www.raspberrypi.org/downloads/raspbian/
 
-Create your new hard disk for DashboardPI
+**Create your new hard disk for DashboardPI**
+>Insert the microSD to your computer via USB adapter and create the disk image using the `dd` command
+>
+> Locate your inserted microSD card via the `df -h` command, unmount it and create the disk image with the disk copy `dd` command
+> 
+> $ `df -h`
+> */dev/sdb1       7.4G   32K  7.4G   1% /media/XXX/1234-5678*
+> 
+> $ `umount /dev/sdb1`
+> 
+> **Caution: be sure the command is completely accurate, you can damage other disks with this command**
+> 
+> *if=location of RASPBIAN JESSIE LITE image file*
+> *of=location of your microSD card*
+> 
+> $ `sudo dd bs=4M if=/path/to/raspbian-jessie-lite.img of=/dev/sdb`
+> *(note: in this case, it's /dev/sdb, /dev/sdb1 was an existing factory partition on the microSD)*
 
-Insert the microSD to your computer via USB adapter and create the disk image using the dd command
 
-Locate your inserted microSD card via the df -h command, unmount it and create the disk image with the disk copy dd command
+**Setting up your RaspberriPi**
 
-$ df -h /dev/sdb1 7.4G 32K 7.4G 1% /media/XXX/1234-5678
-
-$ umount /dev/sdb1
-
-Caution: be sure the command is completely accurate, you can damage other disks with this command
-
-if=location of RASPBIAN JESSIE LITE image file of=location of your microSD card
-
-$ sudo dd bs=4M if=/path/to/raspbian-jessie-lite.img of=/dev/sdb (note: in this case, it's /dev/sdb, /dev/sdb1 was an existing factory partition on the microSD)
-
-Setting up your RaspberriPi
-
-Insert your new microSD card to the raspberrypi and power it on with a monitor connected to the HDMI port
+*Insert your new microSD card to the raspberrypi and power it on with a monitor connected to the HDMI port*
 
 Login
-
-user: pi pass: raspberry
+> user: **pi**
+> pass: **raspberry**
 
 Change your account password for security
-
-sudo passwd pi
+>`sudo passwd pi`
 
 Enable RaspberriPi Advanced Options
+>`sudo raspi-config`
 
-sudo raspi-config
+Choose:
+`1 Expand File System`
 
-Choose: 1 Expand File System
+`9 Advanced Options`
+>`A2 Hostname`
+>*change it to "EnvironmentClock"*
+>
+>`A4 SSH`
+>*Enable SSH Server*
+>
+>`A7 I2C`
+>*Enable i2c interface*
 
-9 Advanced Options
+**Enable the English/US Keyboard**
 
-A2 Hostname change it to "DOORCAM"
+>`sudo nano /etc/default/keyboard`
 
-A4 SSH Enable SSH Server
+> Change the following line:
+>`XKBLAYOUT="us"`
 
-A7 I2C Enable i2c interface
+**Reboot PI for Keyboard layout changes / file system resizing to take effect**
+>$ `sudo shutdown -r now`
 
-Enable the English/US Keyboard
+**Auto-Connect to your WiFi**
 
-sudo nano /etc/default/keyboard
+>`sudo nano /etc/wpa_supplicant/wpa_supplicant.conf`
 
-Change the following line: XKBLAYOUT="us"
+Add the following lines to have your raspberrypi automatically connect to your home WiFi
+*(if your wireless network is named "linksys" for example, in the following example)*
 
-Reboot PI for Keyboard layout changes / file system resizing to take effect
+	network={
+	   ssid="linksys"
+	   psk="WIRELESS PASSWORD HERE"
+	}
 
-$ sudo shutdown -r now
+**Reboot PI to connect to WiFi network**
 
-Auto-Connect to your WiFi
+>$ `sudo shutdown -r now`
+>
+>Now that your PI is finally on the local network, you can login remotely to it via SSH.
+>But first you need to get the IP address it currently has.
+>
+>$ `ifconfig`
+>*Look for "inet addr: 192.168.XXX.XXX" in the following command's output for your PI's IP Address*
 
-sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+**Go to another machine and login to your raspberrypi via ssh**
 
-Add the following lines to have your raspberrypi automatically connect to your home WiFi (if your wireless network is named "linksys" for example, in the following example)
+> $ `ssh pi@192.168.XXX.XXX`
 
-network={
-   ssid="linksys"
-   psk="WIRELESS PASSWORD HERE"
-}
-Reboot PI to connect to WiFi network
+**Start Installing required packages**
 
-$ sudo shutdown -r now
+>$ `sudo apt-get update`
+>
+>$ `sudo apt-get upgrade`
+>
+>$ `sudo apt-get install vim git python-requests python-smbus i2c-tools python-imaging python-smbus build-essential python-dev rpi.gpio python3 python3-pip libi2c-dev`
 
-Now that your PI is finally on the local network, you can login remotely to it via SSH. But first you need to get the IP address it currently has.
+**Update local timezone settings**
 
-$ ifconfig Look for "inet addr: 192.168.XXX.XXX" in the following command's output for your PI's IP Address
+>$ `sudo dpkg-reconfigure tzdata`
 
-Go to another machine and login to your raspberrypi via ssh
+> select your timezone using the interface
 
-$ ssh pi@192.168.XXX.XXX
+**Setup the simple directory `l` command [optional]**
 
-Start Installing required packages
+>$ `vi ~/.bashrc`
+>
+>*add the following line:*
+>
+>$ `alias l='ls -lh'`
+>
+>$ `source ~/.bashrc`
 
-$ sudo apt-get update
+**Fix VIM default syntax highlighting [optional]**
 
-$ sudo apt-get upgrade
+>$ `sudo vi /etc/vim/vimrc`
+>
+>uncomment the following line:
+>
+>_syntax on_
 
-$ sudo apt-get install vim git python-requests python-smbus i2c-tools python-imaging python-smbus build-essential python-dev rpi.gpio python3 python3-pip libi2c-dev
+**Install Motion Webcam Utility**
 
-Update local timezone settings
+>$ sudo apt install motion
 
-$ sudo dpkg-reconfigure tzdata
+**Edit config to output JPGs for upload**
 
-select your timezone using the interface
+>$ sudo vi /etc/motion/motion.conf
+>    output_pictures on
+>    ffmpeg_output_movies off
 
-Setup the simple directory l command [optional]
+>$ sudo service motion restart
 
-$ vi ~/.bashrc
+**Create a symlink in the home folder**
+>
+>$ cd ~
+>
+>$ ln -s /var/lib/motion
+>
 
-add the following line:
+**Clone Webcam repository**
 
-$ alias l='ls -lh'
+>$ cd ~
+>
+>$ git clone https://github.com/khinds10/QuickDoorCam.git
+>
+>$ pip3 install pysftp
 
-$ source ~/.bashrc
+**Edit Crontab to upload each minute the latest motion image**
+>
+>`# m h  dom mon dow   command`
+>
+>`* * * * * python3 /home/pi/QuickDoorCam/upload.py`
 
-Fix VIM default syntax highlighting [optional]
+**Supplies Needed**
 
-$ sudo vi /etc/vim/vimrc
+**RaspberriPi Zero**
 
-uncomment the following line:
+**Pi Zero**
 
-syntax on
-
-Install Motion Webcam Utility
-
-$ sudo apt install motion
-
-Edit config to output JPGs for upload
-
-$ sudo vi /etc/motion/motion.conf
-    output_pictures on
-    ffmpeg_output_movies off
-
-$ sudo service motion restart
-
-Create a symlink in the home folder
-
-$ cd ~
-
-$ ln -s /var/lib/motion
-
-Clone Webcam repository
-
-$ cd ~
-
-$ git clone https://github.com/khinds10/QuickDoorCam.git
-
-$ pip3 install pysftp
-
-Edit Crontab to upload each minute the latest motion image
-
-# m h  dom mon dow   command
-* * * * * python3 /home/pi/QuickDoorCam/upload.py
-
-Supplies Needed
-
-RaspberriPi Zero
-
-Pi Zero
-
-Build and wire the device
+**Build and wire the device**
 
 1) Print the Project Enclosure
 
     Using a 3D printer print the enclosure files included in the 'enclosure/' folder. .x3g files are MakerBot compatible. You can also use the .stl and .blend (Blender Program) files to edit and create your own improvements to the design.
 
-3) TODO
+2) TODO
 
-4) TODO
+3) TODO
 
 Configure Application to run correctly in settings.py config file
 Find the file settings.py and adjust to your current settings
-
-Setup Startup Scripts
-$ crontab -e
-
-Verify the display starts working on reboot
-
-$ sudo reboot
-
