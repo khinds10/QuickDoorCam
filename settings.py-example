@@ -1,4 +1,5 @@
-# configuration
+# configuration 
+#   (create a copy of this file as settings.py - with your own settings applied as values)
 webcamImage = 'NAME-OF-UPLOAD-IMAGE.jpg'
 hostName = 'SFTP-HOSTNAME'
 hostPath = 'SFTP-PATH-NAME'

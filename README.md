@@ -22,7 +22,6 @@ https://www.raspberrypi.org/downloads/raspbian/
 > $ `sudo dd bs=4M if=/path/to/raspbian-jessie-lite.img of=/dev/sdb`
 > *(note: in this case, it's /dev/sdb, /dev/sdb1 was an existing factory partition on the microSD)*
 
-
 **Setting up your RaspberriPi**
 
 *Insert your new microSD card to the raspberrypi and power it on with a monitor connected to the HDMI port*
@@ -38,17 +37,17 @@ Enable RaspberriPi Advanced Options
 >`sudo raspi-config`
 
 Choose:
-`1 Expand File System`
+`Expand File System`
 
-`9 Advanced Options`
->`A2 Hostname`
->*change it to "EnvironmentClock"*
+`Advanced Options`
+>`Hostname`
+>*change it to "DOORCAM"*
 >
->`A4 SSH`
+>`SSH`
 >*Enable SSH Server*
 >
->`A7 I2C`
->*Enable i2c interface*
+>`Enable Camera`
+>*Enable camera interface*
 
 **Enable the English/US Keyboard**
 
@@ -66,11 +65,11 @@ Choose:
 
 Add the following lines to have your raspberrypi automatically connect to your home WiFi
 *(if your wireless network is named "linksys" for example, in the following example)*
-
-	network={
-	   ssid="linksys"
-	   psk="WIRELESS PASSWORD HERE"
-	}
+>
+>	network={
+>	   ssid="linksys"
+>	   psk="WIRELESS PASSWORD HERE"
+>	}
 
 **Reboot PI to connect to WiFi network**
 
