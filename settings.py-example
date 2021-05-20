@@ -1,0 +1,6 @@
+# configuration
+webcamImage = 'NAME-OF-UPLOAD-IMAGE.jpg'
+hostName = 'SFTP-HOSTNAME'
+hostPath = 'SFTP-PATH-NAME'
+userName = 'SFTP-USER-NAME'
+passwd = 'SFTP-PASSWORD'
