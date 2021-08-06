@@ -1,7 +1,25 @@
-# configuration 
-#   (create a copy of this file as settings.py - with your own settings applied as values)
-webcamImage = 'NAME-OF-UPLOAD-IMAGE.jpg'
-hostName = 'SFTP-HOSTNAME'
-hostPath = 'SFTP-PATH-NAME'
-userName = 'SFTP-USER-NAME'
-passwd = 'SFTP-PASSWORD'
+#!/usr/bin/python
+# Kevin Hinds http://www.kevinhinds.com
+# License: GPL 2.0
+
+# forecast.io API key for local weather information
+weatherAPIURL = 'https://api.forecast.io/forecast/'
+weatherAPIKey = 'MY API KEY HERE'
+
+# digole display driver settings
+projectFolder = '/home/pi/QuickDoorCam/'
+
+# capture image settings
+basewidth = 160
+hsize = 128
+
+# search google to get the Latitude/Longitude for your home location
+latitude = 45
+longitude = -72
+
+# SFTP upload connection
+sftpHost = 'mywebsite.com'
+sftpFolder = '/var/www/path/to/webroot'
+sftpUser = 'username'
+sftpPass = 'password'
+sftpFileName = 'door-cam.jpg'
