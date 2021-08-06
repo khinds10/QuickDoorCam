@@ -148,7 +148,7 @@ Add the following lines to have your raspberrypi automatically connect to your h
 >
 >`# m h  dom mon dow   command`
 >
->`* * * * * python3 /home/pi/QuickDoorCam/upload.py`
+>`* * * * * python /home/pi/QuickDoorCam/webcam.py`
 
 **Supplies Needed**
 
@@ -362,6 +362,6 @@ Using a 3D printer print the enclosure files included in the 'enclosure/' folder
 Add the following line to your PI crontab to run the capture program starting at 4am
 
 >$ `crontab -e`
->`0  4  *  *  *  python /home/pi/SunRiseCatcher/capture.py > /home/pi/SunRiseCatcher/capture.out`
+>`* * * * * python /home/pi/QuickDoorCam/webcam.py`
 
 ### FINISHED!
