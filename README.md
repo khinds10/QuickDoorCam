@@ -134,10 +134,11 @@ Add the following lines to have your raspberrypi automatically connect to your h
 **RaspberriPi Zero (W Model w/ built in wireless)**
 ![PiZero W](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/pizero.jpg "PiZero W")
 
+**Webcam (fisheye FOV lens)**
+![Fisheye](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/fisheye.jpg "Fisheye")
 
-**RaspberriPi Zero**
-
-**Pi Zero**
+**LED**
+![LED](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/led.jpg "LED")
 
 **Build and wire the device**
 
@@ -145,12 +146,32 @@ Add the following lines to have your raspberrypi automatically connect to your h
 
     Using a 3D printer print the enclosure files included in the 'enclosure/' folder. .x3g files are MakerBot compatible. You can also use the .stl and .blend (Blender Program) files to edit and create your own improvements to the design.
 
-2) TODO
+2) Solder an appropriate resister and LED to the +3v and GND leads of the PI
 
-3) TODO
+![LED](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/led1.jpg "LED")
 
-Configure Application to run correctly in settings.py config file
-Find the file settings.py and adjust to your current settings
+![LED2](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/led2.jpg "LED2")
+
+3) Get the webcam and the LED and the RPI ready to mount in the case
+
+![Wiring](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/wiring.jpg "Wiring")
+
+4) Mount the Camera throught the front hole
+
+![Mount](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/mount-camera.jpg "Mount")
+
+
+5) Install the LED through the small hole in the corner and place the RPI Zero and wiring inside the case
+
+![Inside](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/inside.jpg "Inside")
+
+![Inside2](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/inside2.jpg "Inside2")
+
+6) Configure Application to run correctly in settings.py config file
+
+Find the file settings.py-example and adjust to your current settings
+
+Enter your SFTP server and api.forecast.io credentials to get the weather subtitles working and the images uploaded to be viewed on the web.
 
 **Run Daily each minute (via crontab)**
 
