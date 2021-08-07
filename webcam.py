@@ -10,6 +10,10 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 from operator import itemgetter
+
+# get the datetime string to save the webcam image
+now = datetime.now()
+imageDateString = now.strftime("%m-%d-%Y-%H:%M:%S")
         
 # begin the attempt to get the current weather for sunrise data (get what time the sunrises)
 count = 0
@@ -83,6 +87,7 @@ img.save(cameraPictureTaken)
 
 # get the current most colorful to move over to the webserver and email it
 shutil.move(cameraPictureTaken, 'webcam.jpg')
+shutil.copy('webcam.jpg', '/home/pi/images/'+imageDateString+'.jpg')
 
 # upload the image to the webhost to show on sunrise mirror
 subprocess.Popen( "sshpass -p '" + settings.sftpPass + "' scp -o 'StrictHostKeyChecking no' webcam.jpg " + settings.sftpUser + "@" + settings.sftpHost + ":" + settings.sftpFolder + settings.sftpFileName, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
