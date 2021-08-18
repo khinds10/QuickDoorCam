@@ -173,11 +173,9 @@ Find the file settings.py-example and adjust to your current settings
 
 Enter your SFTP server and api.forecast.io credentials to get the weather subtitles working and the images uploaded to be viewed on the web.
 
-**Run Daily each minute (via crontab)**
-
-Add the following line to your PI crontab to run the capture program each minute
-
->$ `crontab -e`
->`* * * * * python /home/pi/QuickDoorCam/webcam.py`
-
 ### FINISHED!
+
+![Inside2](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/finished.jpg "Finished")
+
+![Camera Shot](https://raw.githubusercontent.com/khinds10/QuickDoorCam/master/construction/back-door.jpg "Camera Shot")
+
