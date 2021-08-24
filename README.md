@@ -363,5 +363,6 @@ Add the following line to your PI crontab to run the capture program starting at
 
 >$ `crontab -e`
 >`* * * * * python /home/pi/QuickDoorCam/webcam.py`
+>`* * * * * find /home/pi/images -name "*.jpg" -type f -mtime +30 -delete`
 
 ### FINISHED!
