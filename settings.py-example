@@ -6,7 +6,7 @@
 weatherAPIURL = 'https://api.forecast.io/forecast/'
 weatherAPIKey = 'MY API KEY HERE'
 
-# digole display driver settings
+# project main folder
 projectFolder = '/home/pi/QuickDoorCam/'
 
 # capture image settings
